@@ -4,7 +4,7 @@ part of 'app_pages.dart';
 /// All routes must start with a backslash [\]
 abstract class Routes {
   static const onboarding = '/app/onboarding';
-  static const login = '/app/login';
-  static const register = '/app/register';
-  static const home = '/app/home';
+  // static const login = '/app/login';
+  // static const register = '/app/register';
+  // static const home = '/app/home';
 }
