@@ -1,5 +1,12 @@
 import 'package:get/get.dart';
 
+import '../modules/dashboard/Freight/presentation/freight.details.dart';
+import '../modules/dashboard/Home/presentation/HomeUi.dart';
+import '../modules/dashboard/onboarding/presentation/onboarding.ui.dart';
+import '../modules/dashboard/profile/presentation/widgets/profileEdit.dart';
+import '../modules/dashboard/truck_manager_dashboard/dashboard_layout.dart';
+import '../modules/dashboard_layout.dart';
+
 // // import 'package:riilfit/src/modules/authentication/register/presentation/register.ui.dart';
 // // import 'package:riilfit/src/modules/dashboard/gym/gym_details/presentation/gym_details.ui.dart';
 // // import 'package:riilfit/src/modules/dashboard/gym/gyms_list/presentation/gym.ui.dart';
@@ -32,10 +39,30 @@ class AppPages {
   // );
 
   static final pages = [
-    // GetPage(
-    //   name: Routes.onboarding,
-    //   page: () => OnboardingUi(),
-    // ),
+    GetPage(
+      name: Routes.onboarding,
+      page: () => OnboardingUi(),
+    ),
+    GetPage(
+      name: Routes.home,
+      page: () => HomeUi(),
+    ),
+    GetPage(
+      name: Routes.freightDetails,
+      page: () => FreighDetails(),
+    ),
+    GetPage(
+      name: Routes.dashLayout,
+      page: () => dashLayout(),
+    ),
+    GetPage(
+      name: Routes.profileEdit,
+      page: () => profileEditUi(),
+    ),
+    GetPage(
+      name: Routes.truckManagerDashLayout,
+      page: () => TruckManagerDashLayout(),
+    ),
     // GetPage(
     //   name: Routes.login,
     //   page: () => const LoginUi(),

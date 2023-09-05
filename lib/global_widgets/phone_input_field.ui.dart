@@ -44,7 +44,7 @@ class PhoneInputField extends StatelessWidget {
               ),
               Icon(
                 Icons.expand_more,
-                color: primary,
+                color: blue500,
                 size: 24,
               )
             ],

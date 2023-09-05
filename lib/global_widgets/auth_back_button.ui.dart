@@ -31,14 +31,14 @@ class AuthBackButtonUi extends StatelessWidget {
           ),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: const BorderRadius.all(
-                smallRadius,
-              ),
-              border: Border.all(
-                color: iconColor ?? grayScale100,
-              ),
-            ),
+                // color: backgroundColor,
+                // borderRadius: const BorderRadius.all(
+                //   smallRadius,
+                // ),
+                // border: Border.all(
+                //   color: iconColor ?? grayScale100,
+                // ),
+                ),
             child: SvgPicture.asset(
               backIcon,
               fit: BoxFit.none,

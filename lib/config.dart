@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:travely/modules/dashboard/truck_manager_dashboard/Home/controllers/homeController.dart';
 
 import 'controller/base.controller.dart';
+import 'modules/dashboard/Home/controllers/homeController.dart';
 import 'services/navigation.service.dart';
 
 Future<void> initializeHive() async {
@@ -35,6 +37,8 @@ Future<void> initializeServices() async {
     // ..lazyPut(ThemeService.new)
     ..lazyPut(NavigationService.new)
     ..lazyPut(BaseController.new, fenix: true);
+  Get.put(HomeController());
+  Get.put(TruckManagerHomeController());
 }
 
 bool ChooseRoleRoute = false;

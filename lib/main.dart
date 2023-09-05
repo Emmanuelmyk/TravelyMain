@@ -21,7 +21,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   await initializeServices();
 
   runApp(TravelyApp());
@@ -42,7 +42,7 @@ class TravelyApp extends StatelessWidget {
         return OverlaySupport.global(
           child: GetMaterialApp(
             navigatorKey: Get.find<NavigationService>().navigatorKey,
-            initialRoute: Routes.onboarding,
+            initialRoute: Routes.dashLayout,
 
             //  (JwtDecoder.isExpired(token.toString()) == false)
             //     ? Routes.app
@@ -52,7 +52,7 @@ class TravelyApp extends StatelessWidget {
             // themeMode: Get.find<ThemeService>().getThemeMode(),
             // darkTheme: Get.find<ThemeService>().dark,
 
-            // getPages: AppPages.pages,
+            getPages: AppPages.pages,
             title: 'Travely',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

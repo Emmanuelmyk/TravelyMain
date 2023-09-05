@@ -45,20 +45,19 @@ class PrimaryButtonUi extends ButtonUi {
             shape: MaterialStateProperty.all(
               const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  smallRadius,
+                  bigRadius,
                 ),
               ),
             ),
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
-                  return backgroundColor ?? primary;
+                  return backgroundColor ?? blue500;
                 } else if (states.contains(MaterialState.disabled)) {
-                  return backgroundColor?.withOpacity(.8) ??
-                      primary.withOpacity(.3);
+                  return backgroundColor?.withOpacity(.8) ?? grayScale50;
                 }
                 return backgroundColor ??
-                    primary; // Use the component's default.
+                    blue300; // Use the component's default.
               },
             ),
           ),
@@ -69,8 +68,8 @@ class PrimaryButtonUi extends ButtonUi {
                 )
               : TextUi(
                   text,
-                  color: white,
-                  style: buttonTypography,
+                  color: grayScale300,
+                  style: bodyNormBold,
                 ),
         );
 

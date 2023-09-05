@@ -44,7 +44,7 @@ class MainAppbarUi extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final List<Widget>? actions;
-  final String title;
+  final Widget title;
   final bool showBackButton;
   final Color? backgroundColor;
   final Color? iconColor;
@@ -56,6 +56,7 @@ class MainAppbarUi extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       leadingWidth: 64,
       bottom: bottom,
+      elevation: 0,
       leading: showBackButton
           ? AuthBackButtonUi(
               size: 24,
@@ -64,11 +65,8 @@ class MainAppbarUi extends StatelessWidget implements PreferredSizeWidget {
             )
           : const SizedBox.shrink(),
       actions: actions,
-      centerTitle: true,
-      title: TextUi.bodyLarge(
-        title,
-        fontWeight: semiBoldText,
-      ),
+      centerTitle: false,
+      title: title,
     );
   }
 
