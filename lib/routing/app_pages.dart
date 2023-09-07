@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
 
+import '../modules/authentication/user_signin/number_verified.dart';
+import '../modules/authentication/user_signin/phone_number.dart';
+import '../modules/authentication/user_signin/verify_number.dart';
 import '../modules/dashboard/Freight/presentation/freight.details.dart';
 import '../modules/dashboard/Home/presentation/HomeUi.dart';
-import '../modules/dashboard/onboarding/presentation/onboarding.ui.dart';
+
 import '../modules/dashboard/profile/presentation/widgets/profileEdit.dart';
 import '../modules/dashboard/truck_manager_dashboard/dashboard_layout.dart';
 import '../modules/dashboard_layout.dart';
+import '../modules/onboarding/onboarding.ui.dart';
 
 // // import 'package:riilfit/src/modules/authentication/register/presentation/register.ui.dart';
 // // import 'package:riilfit/src/modules/dashboard/gym/gym_details/presentation/gym_details.ui.dart';
@@ -62,6 +66,18 @@ class AppPages {
     GetPage(
       name: Routes.truckManagerDashLayout,
       page: () => TruckManagerDashLayout(),
+    ),
+    GetPage(
+      name: Routes.phoneScreen,
+      page: () => PhoneScreen(),
+    ),
+    GetPage(
+      name: Routes.verifyScreen,
+      page: () => VerifyScreen(),
+    ),
+    GetPage(
+      name: Routes.verifiedScreen,
+      page: () => VerifiedScreen(),
     ),
     // GetPage(
     //   name: Routes.login,

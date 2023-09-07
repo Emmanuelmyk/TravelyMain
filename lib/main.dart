@@ -21,7 +21,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await initializeServices();
 
   runApp(TravelyApp());
@@ -42,7 +42,7 @@ class TravelyApp extends StatelessWidget {
         return OverlaySupport.global(
           child: GetMaterialApp(
             navigatorKey: Get.find<NavigationService>().navigatorKey,
-            initialRoute: Routes.dashLayout,
+            initialRoute: Routes.onboarding,
 
             //  (JwtDecoder.isExpired(token.toString()) == false)
             //     ? Routes.app

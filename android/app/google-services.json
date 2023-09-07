@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "232936993621",
+    "firebase_url": "https://travely-cd22e-default-rtdb.firebaseio.com",
+    "project_id": "travely-cd22e",
+    "storage_bucket": "travely-cd22e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232936993621:android:8d8ceb121ea54a51d7f5dc",
+        "android_client_info": {
+          "package_name": "com.example.travely"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232936993621-vnpjejs9sh2vlh5ftf288f87sihh813f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmPWgWiONzEWQp5i_A1RJ4T0sF4Ssw2Ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232936993621-vnpjejs9sh2vlh5ftf288f87sihh813f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
