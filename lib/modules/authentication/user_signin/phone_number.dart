@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:travely/global_widgets/text.ui.dart';
 import 'package:travely/modules/authentication/user_signin/verify_number.dart';
+import 'package:travely/resources/res.dart';
 
 import '../../onboarding/onboarding.ui.dart';
 import 'controller/user.signinController.dart';
@@ -25,9 +28,9 @@ class _PhoneScreenState extends State<PhoneScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 36,
-              ),
+              // const SizedBox(
+              //   height: 36,
+              // ),
               IconButton(
                 iconSize: 20,
                 icon: const Icon(Icons.arrow_back),
@@ -56,29 +59,28 @@ class _PhoneScreenState extends State<PhoneScreen> {
               const SizedBox(
                 height: 32,
               ),
-              Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(16)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                        child: TextField(
-                      controller: controller.phoneNoController,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Phone Number",
+              SizedBox(
+                  width: 358.w,
+                  child: TextField(
+                    maxLength: 10,
+                    controller: controller.phoneNoController,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding:
+                            const EdgeInsets.only(right: 20, top: 10, left: 10),
+                        child: TextUi.bodyMedBold('+234'),
                       ),
-                    ))
-                  ],
-                ),
-              ),
+                      border: InputBorder.none,
+                      hintText: "Phone Number",
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: grayScale200)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: grayScale200)),
+                    ),
+                  )),
               Expanded(
                 child: Align(
                   alignment: FractionalOffset.bottomCenter,

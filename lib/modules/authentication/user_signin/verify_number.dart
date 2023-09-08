@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:travely/modules/authentication/user_signin/phone_number.dart';
 
+import 'controller/user.signinController.dart';
 import 'number_verified.dart';
 
 class VerifyScreen extends StatefulWidget {
@@ -14,9 +16,10 @@ class VerifyScreen extends StatefulWidget {
 
 class _VerifyScreenState extends State<VerifyScreen> {
   TextEditingController countryController = TextEditingController();
-
+  final controller = Get.put(UserSigninController());
   @override
   Widget build(BuildContext context) {
+    var Otp;
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.only(left: 16, right: 16),
@@ -64,7 +67,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 focusedBorderColor: const Color.fromARGB(255, 93, 103, 209),
                 borderWidth: 2.0,
                 showFieldAsBox: true,
-                onSubmit: (String verificationCode) {},
+                onSubmit: (String code) {
+                  Otp = code;
+                  controller.signInWithOTP(Otp);
+                },
               ),
             ),
             const SizedBox(
@@ -95,12 +101,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VerifiedScreen(),
-                            ),
-                          );
+                          controller.signInWithOTP(Otp);
                         },
                         child: const Text(
                           'Continue',
