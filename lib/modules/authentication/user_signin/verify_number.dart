@@ -67,6 +67,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 focusedBorderColor: const Color.fromARGB(255, 93, 103, 209),
                 borderWidth: 2.0,
                 showFieldAsBox: true,
+                onCodeChanged: (value) {
+                  Otp = value;
+                  controller.signInWithOTP(Otp);
+                },
                 onSubmit: (String code) {
                   Otp = code;
                   controller.signInWithOTP(Otp);

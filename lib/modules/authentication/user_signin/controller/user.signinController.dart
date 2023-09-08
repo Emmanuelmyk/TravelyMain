@@ -80,7 +80,8 @@ class UserSigninController extends BaseController {
       }
     } catch (e) {
       // Handle any sign-in errors here
-      Get.snackbar('', 'Sign-in error: $e');
+
+      print(e);
     }
   }
 
