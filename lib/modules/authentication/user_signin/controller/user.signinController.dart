@@ -34,7 +34,7 @@ class UserSigninController extends BaseController {
         verificationCompleted: (credentials) async {
           await _auth.signInWithCredential(credentials);
         },
-        timeout: Duration(seconds: 60),
+        timeout: Duration(milliseconds: 1),
         verificationFailed: (e) {
           if (e.code == 'invalid-phone-number') {
             Get.snackbar('Error', 'The provided phone number is invalid');
