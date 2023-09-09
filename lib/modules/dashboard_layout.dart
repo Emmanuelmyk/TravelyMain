@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:travely/resources/colors.res.dart';
@@ -31,11 +32,11 @@ class _dashLayoutState extends State<dashLayout> {
       body: dashLayoutItems.elementAt(_selectedIndex),
       bottomNavigationBar: GNav(
         padding:
-            const EdgeInsets.only(top: 20, bottom: 15, left: 25, right: 25),
+            EdgeInsets.only(top: 20.h, bottom: 15.h, left: 25.w, right: 25.w),
         activeColor: blue500,
         tabBackgroundColor: blue500.withOpacity(0.1),
         selectedIndex: _selectedIndex,
-        gap: 10,
+        gap: 10.w,
         onTabChange: (index) {
           setState(() {
             _selectedIndex = index;
