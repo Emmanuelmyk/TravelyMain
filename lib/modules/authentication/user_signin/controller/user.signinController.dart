@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:travely/modules/dashboard_layout.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import '../../../../controller/base.controller.dart';
 import '../../../../routing/app_pages.dart';
 
 class UserSigninController extends BaseController {
   final _auth = FirebaseAuth.instance;
   var _verificationId = ''.obs;
-
+  DatabaseReference databaseRef = FirebaseDatabase.instance.ref().child('user');
+  final Rx<User?> user = Rx<User?>(null);
+  // var uid = ''.obs;
   final phoneNoController = TextEditingController(
     text: kDebugMode ? '' : null,
   );
@@ -19,6 +21,15 @@ class UserSigninController extends BaseController {
     text: kDebugMode ? '' : null,
   );
 
+  final firstnameController = TextEditingController(
+    text: kDebugMode ? '' : null,
+  );
+  final lastnameController = TextEditingController(
+    text: kDebugMode ? '' : null,
+  );
+  final emailController = TextEditingController(
+    text: kDebugMode ? '' : null,
+  );
   void resendVerificationCode() {
     // Implement code to resend the verification code here
     // You can use a similar logic as the initial codeSent callback.
@@ -68,11 +79,14 @@ class UserSigninController extends BaseController {
       UserCredential userCredential =
           await _auth.signInWithCredential(credential);
 
-      User? user = userCredential.user;
-      if (user != null) {
+      User? signedInUser = userCredential.user;
+      if (signedInUser != null) {
+        // Set the user in the Rx variable
+        user.value = signedInUser;
+
         // User is signed in, you can navigate to the next screen or perform other actions.
         Get.offAndToNamed<void>(Routes.verifiedScreen);
-        String uid = user.uid;
+        var uid = signedInUser.uid;
         print('User UID: $uid');
       } else {
         // Handle the case where user is null (sign-in failed)
@@ -82,8 +96,10 @@ class UserSigninController extends BaseController {
       // Handle any sign-in errors here
       if (e == 'firebase_auth/session-expired') {
         // Display a message to inform the user that the SMS code has expired.
-        Get.snackbar('',
-            'The SMS code has expired. Please re-send the verification code to try again.');
+        Get.snackbar(
+          '',
+          'The SMS code has expired. Please re-send the verification code to try again.',
+        );
 
         // Optionally, provide a button to resend the OTP.
         // Example: Show a "Resend OTP" button that calls `signInWithPhoneNumber` again.
@@ -95,9 +111,82 @@ class UserSigninController extends BaseController {
     }
   }
 
-  // void navigateToRegisterPage() {
-  //     Get.offAndToNamed<void>(
-  //       Routes.dashLayout,
-  //     );
-  //   }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+  void CreateUserInRealtimeDatabase(
+      String email, String firstname, String lastname) async {
+    var phonenoReceiver = phoneNoController.text;
+
+    await databaseRef.child(user.value!.uid).set({
+      'Id': user.value!.uid,
+      'Phone No': "+234$phonenoReceiver",
+      'email': email,
+      'firstname': firstname,
+      'lastname': lastname,
+    });
+    Get.offAndToNamed<void>(
+      Routes.dashLayout,
+    );
+  }
+
+  void navigateToRegisterPage() {
+    Get.offAndToNamed<void>(
+      Routes.dashLayout,
+    );
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  Future<bool> checkUserProfileExists() async {
+    try {
+      // Get the user from the Rx observable
+      User? currentUser = user.value;
+
+      if (currentUser != null) {
+        // Get the user's UID
+        String userUid = currentUser.uid;
+
+        // Reference to the Firebase Realtime Database
+        DatabaseReference databaseRef =
+            FirebaseDatabase.instance.ref().child('user');
+
+        // Check if the user's UID exists in the database
+        DataSnapshot snapshot = await databaseRef.child(userUid).get();
+
+        // If the snapshot has a value, the user profile exists
+        if (snapshot.value != null) {
+          return true;
+        }
+      }
+
+      // User profile doesn't exist
+      return false;
+    } catch (e) {
+      // Handle any errors or exceptions here
+      print('Error checking user profile: $e');
+      return false; // You can handle this differently based on your needs
+    }
+  }
+
+  Future<void> signOutUser() async {
+    try {
+      // Sign out the user using Firebase Authentication
+      await _auth.signOut();
+
+      // Clear the user information in GetX controller
+      user.value = null;
+      // isSignedIn.value = false;
+
+      // You can also clear any other user-related data or states here
+
+      // Navigate to the sign-in screen or any other screen you prefer
+      phoneNoController.clear();
+      Get.offAllNamed(Routes.phoneScreen);
+    } catch (e) {
+      // Handle sign-out errors here
+      print('Error signing out: $e');
+    }
+  }
 }
