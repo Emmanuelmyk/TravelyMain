@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
 
-import '../create_Ptofile/create_profile.dart';
+import '../create_user_Ptofile/create_profile.dart';
 
 class VerifiedScreen extends StatefulWidget {
   const VerifiedScreen({super.key});
