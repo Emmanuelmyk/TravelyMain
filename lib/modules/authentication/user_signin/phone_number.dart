@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:travely/global_widgets/text.ui.dart';
 import 'package:travely/modules/authentication/user_signin/verify_number.dart';
 import 'package:travely/resources/res.dart';
-
+import '../../../../routing/app_pages.dart';
 import '../../onboarding/onboarding.ui.dart';
 import 'controller/user.signinController.dart';
 
