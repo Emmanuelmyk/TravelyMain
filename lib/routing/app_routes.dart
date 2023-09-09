@@ -12,6 +12,7 @@ abstract class Routes {
   static const phoneScreen = '/app/phoneScreen';
   static const verifyScreen = '/app/verifyScreen';
   static const verifiedScreen = '/app/verifiedScreen';
+  static const createUser = '/app/createUser';
   // static const login = '/app/login';
   // static const register = '/app/register';
   // static const home = '/app/home';
