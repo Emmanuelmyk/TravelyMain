@@ -45,6 +45,7 @@ class FreighDetails extends StatelessWidget {
               ),
             ),
             const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 addImageContainer(),
                 Gap(17),
