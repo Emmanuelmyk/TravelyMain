@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../modules/authentication/create_user_Ptofile/create_user.dart';
 import '../modules/authentication/user_signin/number_verified.dart';
 import '../modules/authentication/user_signin/phone_number.dart';
 import '../modules/authentication/user_signin/verify_number.dart';
@@ -78,6 +79,10 @@ class AppPages {
     GetPage(
       name: Routes.verifiedScreen,
       page: () => VerifiedScreen(),
+    ),
+    GetPage(
+      name: Routes.createUser,
+      page: () => CreateUser(),
     ),
     // GetPage(
     //   name: Routes.login,
