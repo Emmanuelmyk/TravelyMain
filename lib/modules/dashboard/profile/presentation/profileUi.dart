@@ -12,10 +12,12 @@ import 'package:travely/routing/app_pages.dart';
 import '../../../../global_widgets/gap.ui.dart';
 import '../../../../resources/icons.res.dart';
 import '../../../../resources/weights.res.dart';
+import '../../../authentication/user_signin/controller/user.signinController.dart';
+import '../controller/ProfileController.dart';
 
 class ProfileUi extends StatelessWidget {
-  const ProfileUi({super.key});
-
+  ProfileUi({super.key});
+  final controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +94,9 @@ class ProfileUi extends StatelessWidget {
                 ProfileTileUi(
                   icon: exitIcon,
                   title: 'Logout',
-                  onTap: () {},
+                  onTap: () {
+                    controller.signout();
+                  },
                 ),
                 const Gap(29),
                 InkWell(
