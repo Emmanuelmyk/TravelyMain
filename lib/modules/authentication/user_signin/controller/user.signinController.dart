@@ -26,11 +26,15 @@ class UserSigninController extends BaseController {
     signInwithPhoneNumber(phoneNoController.text.trim());
   }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
   Future<void> signInwithPhoneNumber(String phoneNo) async {
     await _auth.verifyPhoneNumber(
         verificationCompleted: (credentials) async {
           await _auth.signInWithCredential(credentials);
         },
+        timeout: Duration(seconds: 60),
         verificationFailed: (e) {
           if (e.code == 'invalid-phone-number') {
             Get.snackbar('Error', 'The provided phone number is invalid');
@@ -52,9 +56,10 @@ class UserSigninController extends BaseController {
         phoneNumber: "+234$phoneNo");
   }
 
+/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
   Future<void> signInWithOTP(String otp) async {
     try {
-      // Use the verification ID stored in _verificationId
       AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId.value,
         smsCode: otp,
@@ -63,25 +68,30 @@ class UserSigninController extends BaseController {
       UserCredential userCredential =
           await _auth.signInWithCredential(credential);
 
-      // Now you have signed in the user, and you can access the current user
       User? user = userCredential.user;
       if (user != null) {
         // User is signed in, you can navigate to the next screen or perform other actions.
-
-        Get.offAndToNamed<void>(
-          Routes.verifiedScreen,
-        );
-
+        Get.offAndToNamed<void>(Routes.verifiedScreen);
         String uid = user.uid;
         print('User UID: $uid');
       } else {
         // Handle the case where user is null (sign-in failed)
-        Get.snackbar('', 'something happened');
+        Get.snackbar('', 'Something happened');
       }
     } catch (e) {
       // Handle any sign-in errors here
+      if (e == 'firebase_auth/session-expired') {
+        // Display a message to inform the user that the SMS code has expired.
+        Get.snackbar('',
+            'The SMS code has expired. Please re-send the verification code to try again.');
 
-      print(e);
+        // Optionally, provide a button to resend the OTP.
+        // Example: Show a "Resend OTP" button that calls `signInWithPhoneNumber` again.
+      } else {
+        // Handle other sign-in errors
+        Get.snackbar('', 'Sign-in error: $e');
+        print(e);
+      }
     }
   }
 
