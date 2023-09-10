@@ -9,6 +9,7 @@ import 'package:travely/resources/images.res.dart';
 import 'package:travely/resources/res.dart';
 import 'package:travely/resources/typograhy.res.dart';
 
+import '../../../../Models/userDataModel.dart';
 import '../controllers/homeController.dart';
 
 class HomeUi extends StatefulWidget {
@@ -25,6 +26,7 @@ class _HomeUiState extends State<HomeUi> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    controller.fetchUserData();
     _tabController = TabController(
       length: 2, // Define the number of tabs
       vsync: this,
@@ -161,18 +163,23 @@ class _HomeUiState extends State<HomeUi> with SingleTickerProviderStateMixin {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      children: [
-                        TextUi.bodyNorm(
-                          'Welcome,',
-                          color: white,
-                        ),
-                        TextUi.bodyMedBold(
-                          'Oluwatobi',
-                          color: white,
-                        )
-                      ],
-                    ),
+                    Obx(() {
+                      UserData? userData = controller.userData.value;
+                      return Column(
+                        children: [
+                          TextUi.bodyNorm(
+                            'Welcome,',
+                            color: white,
+                          ),
+                          TextUi.bodyMedBold(
+                            userData != null
+                                ? userData.firstname ?? 'user'
+                                : 'user',
+                            color: white,
+                          ),
+                        ],
+                      );
+                    }),
                     Container(
                       decoration: BoxDecoration(
                           border: Border.all(width: 2, color: white),
