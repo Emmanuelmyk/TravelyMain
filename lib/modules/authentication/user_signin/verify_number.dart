@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:travely/modules/authentication/user_signin/phone_number.dart';
+import 'package:travely/resources/colors.res.dart';
 
 import 'controller/user.signinController.dart';
 import 'number_verified.dart';
@@ -92,31 +93,38 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 10, 76, 199),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        onPressed: () {
-                          controller.signInWithOTP(Otp);
-                        },
-                        child: const Text(
-                          'Continue',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal),
-                        ),
-                      ),
-                    ),
+                    Obx(
+                      () => controller.isLoading.value
+                          ? Center(
+                              child: CircularProgressIndicator(
+                              color: blue500,
+                            ))
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 48.0,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 10, 76, 199),
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  controller.signInWithOTP(Otp);
+                                },
+                                child: const Text(
+                                  'Continue',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      fontStyle: FontStyle.normal),
+                                ),
+                              ),
+                            ),
+                    )
                   ],
                 ),
               ),
