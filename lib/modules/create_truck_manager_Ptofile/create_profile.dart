@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travely/modules/dashboard_layout.dart';
 
-import 'create_user.dart';
-
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
 
