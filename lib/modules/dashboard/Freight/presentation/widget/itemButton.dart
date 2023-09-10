@@ -8,10 +8,12 @@ class itemButton extends StatelessWidget {
   const itemButton({
     required this.text,
     required this.ontap,
+    this.onTruckTypeSelected,
     super.key,
   });
   final String text;
   final VoidCallback ontap;
+  final VoidCallback? onTruckTypeSelected;
 
   @override
   Widget build(BuildContext context) {
