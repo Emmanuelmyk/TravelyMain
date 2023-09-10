@@ -98,38 +98,48 @@ class _PhoneScreenState extends State<PhoneScreen> {
                       const SizedBox(
                         height: 32,
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48.0,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 10, 76, 199),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          onPressed: () {
-                            String phoneNumber =
-                                controller.phoneNoController.text.trim();
-                            if (phoneNumber.isNotEmpty) {
-                              controller.signInwithPhoneNumber(phoneNumber);
-                            } else {
-                              Get.snackbar(
-                                  'error', "please enter your phone number");
-                            }
-                          },
-                          child: const Text(
-                            'Sign In',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal),
-                          ),
-                        ),
-                      ),
+                      Obx(
+                        () => controller.isLoading.value
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: blue500,
+                                ),
+                              )
+                            : SizedBox(
+                                width: double.infinity,
+                                height: 48.0,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 10, 76, 199),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    String phoneNumber = controller
+                                        .phoneNoController.text
+                                        .trim();
+                                    if (phoneNumber.isNotEmpty) {
+                                      controller
+                                          .signInwithPhoneNumber(phoneNumber);
+                                    } else {
+                                      Get.snackbar('error',
+                                          "please enter your phone number");
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Sign In',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        fontStyle: FontStyle.normal),
+                                  ),
+                                ),
+                              ),
+                      )
                     ],
                   ),
                 ),
