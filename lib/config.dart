@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:travely/modules/dashboard/truck_manager_dashboard/Home/controllers/homeController.dart';
 
 import 'controller/base.controller.dart';
+import 'modules/authentication/user_signin/controller/user.signinController.dart';
 import 'modules/dashboard/Home/controllers/homeController.dart';
 import 'services/navigation.service.dart';
 
@@ -37,6 +38,7 @@ Future<void> initializeServices() async {
     // ..lazyPut(ThemeService.new)
     ..lazyPut(NavigationService.new)
     ..lazyPut(BaseController.new, fenix: true);
+  Get.put(UserSigninController());
   Get.put(HomeController());
   Get.put(TruckManagerHomeController());
 }
