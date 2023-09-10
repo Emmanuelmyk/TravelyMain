@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travely/modules/dashboard_layout.dart';
+import '../../../resources/colors.res.dart';
 import '../user_signin/controller/user.signinController.dart';
 import '../../../routing/app_pages.dart';
 import 'create_user.dart';
@@ -138,34 +139,43 @@ class _CreateProfileState extends State<CreateProfile> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 48.0,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 10, 76, 199),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const CreateUser(),
-                        //   ),
-                        // );
-                      },
-                      child: const Text(
-                        'Continue',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal),
-                      ),
-                    ),
+                  Obx(
+                    () => controller.isLoading.value
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: blue500,
+                            ),
+                          )
+                        : SizedBox(
+                            width: double.infinity,
+                            height: 48.0,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 10, 76, 199),
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              onPressed: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const CreateUser(),
+                                //   ),
+                                // );
+                              },
+                              child: const Text(
+                                'Continue',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    fontStyle: FontStyle.normal),
+                              ),
+                            ),
+                          ),
                   ),
                   const SizedBox(height: 30),
                 ],
