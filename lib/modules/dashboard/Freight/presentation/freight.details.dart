@@ -8,6 +8,7 @@ import 'package:travely/modules/dashboard/Freight/presentation/widget/freightBut
 import 'package:travely/resources/colors.res.dart';
 import 'package:travely/resources/typograhy.res.dart';
 
+import '../../../../enum.dart';
 import '../../../../global_widgets/gap.ui.dart';
 import '../controller/freightDetailController.dart';
 import 'widget/addImageButton.dart';
@@ -15,6 +16,7 @@ import 'widget/itemButton.dart';
 
 class FreighDetails extends StatelessWidget {
   FreighDetails({super.key});
+
   final controller = Get.put(FreightDetailController());
   @override
   Widget build(BuildContext context) {
