@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:travely/resources/colors.res.dart';
@@ -7,6 +8,7 @@ import 'package:travely/resources/colors.res.dart';
 import '../resources/typograhy.res.dart';
 import 'dashboard/Activity/presentation/activity.dart';
 import 'dashboard/History/presentation/Histroy.dart';
+import 'dashboard/Home/controllers/homeController.dart';
 import 'dashboard/Home/presentation/HomeUi.dart';
 import 'dashboard/profile/presentation/profileUi.dart';
 
