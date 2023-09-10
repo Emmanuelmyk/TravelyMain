@@ -7,6 +7,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../../Models/userDataModel.dart';
 import '../../../../controller/base.controller.dart';
+import '../../../../enum.dart';
 import '../../../../routing/app_pages.dart';
 import '../../../authentication/user_signin/controller/user.signinController.dart';
 
@@ -15,6 +16,8 @@ class HomeController extends BaseController {
   late TextEditingController searchController;
   late TabController tabController;
   Rx<UserData?> userData = Rx<UserData?>(null);
+
+  var selectedService = ServiceType.HeavyDutyHaulage.obs;
   @override
   void onInit() {
     // Set the onSignOut callback to reset userData
@@ -73,5 +76,10 @@ class HomeController extends BaseController {
 
       // Call the function to fetch and use user data
     }
+  }
+
+  void onServiceContainerTap(ServiceType serviceType) {
+    selectedService.value = serviceType;
+    openFreightDetails();
   }
 }
