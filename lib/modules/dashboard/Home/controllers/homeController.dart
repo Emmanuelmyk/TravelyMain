@@ -1,22 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
+import '../../../../Models/userDataModel.dart';
 import '../../../../controller/base.controller.dart';
 import '../../../../routing/app_pages.dart';
+import '../../../authentication/user_signin/controller/user.signinController.dart';
 
 class HomeController extends BaseController {
   var isLoading = false.obs;
-
+  late TextEditingController searchController;
+  late TabController tabController;
+  Rx<UserData?> userData = Rx<UserData?>(null);
   @override
   void onInit() {
+    // Set the onSignOut callback to reset userData
+
     searchController = TextEditingController();
     super.onInit();
   }
 
-  late TextEditingController searchController;
-  late TabController tabController;
+  @override
+  void onReady() {
+    super.onReady();
+    // Fetch user data when the controller is ready
+    fetchUserData();
+  }
 
-  void searchGyms(String? query) {}
+  void searchGyms(String? query) {
+    // Implement your search logic here
+  }
 
   void openFreightDetails() {
     navigationService.navigateTo(
@@ -24,95 +40,38 @@ class HomeController extends BaseController {
     );
   }
 
-  Future<void> makePayment() async {
-    isLoading.value = true;
-    await Future.delayed(Duration(seconds: 5));
-    // login with node js backend
+  // Reset the userData property
 
-    //   try {
-    //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //         email: emailOrPhoneController.text,
-    //         password: passwordController.text);
+  void fetchUserData() async {
+    UserSigninController userSigninController =
+        Get.find<UserSigninController>();
 
-    //     await Get.offAllNamed<void>(
-    //       Routes.app,
-    //     );
-    //   } on FirebaseAuthException catch (e) {
-    //     if (e.code == 'user-not-found') {
-    //       Get.snackbar('no user', 'No user found for that email');
-    //     } else if (e.code == 'wrong-password') {
-    //       Get.snackbar('wrong password', 'wrong password provided for that user');
-    //     } else if (e.code == 'network-request-failed') {
-    //       Get.snackbar(
-    //           'Network error', 'please check your connection and try again');
-    //     }
-    //   }
-    // }
+    // Access the user variable from the controller
+    User? user = userSigninController.user.value;
 
-    // try {
-    //   //Validate form
-    //   loginFormKey.currentState!.save();
-    //   if (!loginFormKey.currentState!.validate()) {
-    //     showFlushBar(
-    //       message: 'Kindly fix validation issues',
-    //     );
-    //     return;
-    //   }
-    //   viewState = ViewState.busy;
+    if (user != null) {
+      // Access the UID
+      String uid = user.uid;
+// Now you can use the UID as needed
+      print('User UID: $uid');
+      DatabaseReference reference =
+          FirebaseDatabase.instance.ref().child('user').child(uid);
 
-    //   final loginDto = LoginDto(
-    //     emailPhone: emailOrPhoneController.text,
-    //     password: passwordController.text,
-    //   );
+      reference.once().then((event) {
+        final snap = event.snapshot;
+        if (snap.value != null) {
+          // Parse and use the data as needed
 
-    //   final res = await AuthApi().login(
-    //     loginDto: loginDto,
-    //   );
+          userData.value = UserData.fromSnapshot(snap);
+          // Access other user-related data fields
 
-    //   if (res.success) {
-    //     //store token
-    //     await storageService.cacheAuthToken(
-    //       res.payload['token'] as String,
-    //     );
+          // Now you can use the retrieved data within your app
+          print(userData.value!.id);
+          print(userData.value!.lastname);
+        }
+      });
 
-    //     //store user
-    //     await storageService.cacheCustomer(
-    //       jsonEncode(res.payload['user']),
-    //     );
-
-    //     unawaited(
-    //       Get.offAllNamed<void>(
-    //         Routes.app,
-    //       ),
-    //     );
-    //     viewState = ViewState.idle;
-    //   } else {
-    //     showFlushBar(
-    //       message: res.message ?? errorMessage,
-    //     );
-    //     viewState = ViewState.idle;
-    //   }
-    // } on SocketException catch (e, s) {
-    //   print('SOCKETEXECPTION');
-    //   log(
-    //     e.toString(),
-    //     stackTrace: s,
-    //   );
-    //   showFlushBar(
-    //     message: errorMessage,
-    //   );
-    //   viewState = ViewState.idle;
-    // } catch (e, s) {
-    //   log(
-    //     e.toString(),
-    //     stackTrace: s,
-    //   );
-    //   showFlushBar(
-    //     message: errorMessage,
-    //   );
-    //   viewState = ViewState.idle;
-    // } finally {
-    //   viewState = ViewState.idle;
-    // }
+      // Call the function to fetch and use user data
+    }
   }
 }
