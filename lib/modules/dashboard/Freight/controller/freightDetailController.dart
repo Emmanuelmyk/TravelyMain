@@ -4,18 +4,32 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import 'package:intl/intl.dart';
 import '../../../../controller/base.controller.dart';
+import '../../../../enum.dart';
 import '../../../../routing/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:travely/resources/res.dart';
+
+import '../../../../../global_widgets/button.ui.dart';
+import '../../../../../global_widgets/gap.ui.dart';
+import '../../../../../global_widgets/text.ui.dart';
+import '../../../../../resources/colors.res.dart';
 
 class FreightDetailController extends BaseController {
   var isLoading = false.obs;
 
   Rx<DateTime> selectedDate = DateTime.now().obs;
   Rx<TimeOfDay> selectedTime = TimeOfDay.now().obs;
+  var selectedTruck = TruckType.flatbed.obs;
   @override
   void onInit() {
     searchController = TextEditingController();
     super.onInit();
   }
+
+//select truck logic
 
   late TextEditingController searchController;
   late TabController tabController;
@@ -26,6 +40,27 @@ class FreightDetailController extends BaseController {
     navigationService.navigateTo(
       Routes.freightDetails,
     );
+  }
+
+  // void openBottomSheet() {
+  //   Get.bottomSheet(
+  //     _buildBottomSheetContent(),
+  //   );
+  // }
+
+  // Widget _buildBottomSheetContent() {
+  //   switch (selectedService.value) {
+  //     case ServiceType.TruckType:
+  //       return _buildTruckTypeSheet();
+  //     case ServiceType.CargoWeight:
+  //       return _buildCargoWeightSheet();
+  //     default:
+  //       return SizedBox.shrink();
+  //   }
+  // }
+
+  void setSelectedTruckType(TruckType truckType) {
+    selectedTruck.value = truckType;
   }
 
   Future<void> makePayment() async {
