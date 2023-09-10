@@ -13,6 +13,8 @@ class UserSigninController extends BaseController {
   var _verificationId = ''.obs;
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref().child('user');
   final Rx<User?> user = Rx<User?>(null);
+
+  VoidCallback? onSignOut;
   // var uid = ''.obs;
   final phoneNoController = TextEditingController(
     text: kDebugMode ? '' : null,
@@ -180,6 +182,9 @@ class UserSigninController extends BaseController {
       // isSignedIn.value = false;
 
       // You can also clear any other user-related data or states here
+      if (onSignOut != null) {
+        onSignOut!();
+      }
 
       // Navigate to the sign-in screen or any other screen you prefer
       phoneNoController.clear();
