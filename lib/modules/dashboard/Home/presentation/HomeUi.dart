@@ -10,6 +10,7 @@ import 'package:travely/resources/res.dart';
 import 'package:travely/resources/typograhy.res.dart';
 
 import '../../../../Models/userDataModel.dart';
+import '../../../../enum.dart';
 import '../controllers/homeController.dart';
 
 class HomeUi extends StatefulWidget {
@@ -86,20 +87,28 @@ class _HomeUiState extends State<HomeUi> with SingleTickerProviderStateMixin {
                         ),
                         Gap(16),
                         servicesContainer(
-                          title: 'Heavy Duty Haulage ',
-                          image: 'assets/png/flatbed.png',
-                          ontap: controller.openFreightDetails,
-                        ),
+                            title: 'Heavy Duty Haulage ',
+                            image: 'assets/png/flatbed.png',
+                            ontap: () {
+                              controller.onServiceContainerTap(
+                                  ServiceType.HeavyDutyHaulage);
+                            }),
                         Gap(16),
                         servicesContainer(
                             title: 'Domestic Goods Haulage ',
                             image: 'assets/png/container.png',
-                            ontap: controller.openFreightDetails),
+                            ontap: () {
+                              controller.onServiceContainerTap(
+                                  ServiceType.DomesticGoodsHaulage);
+                            }),
                         Gap(16),
                         servicesContainer(
                             title: 'Tanker Haulage ',
                             image: 'assets/png/tanker.png',
-                            ontap: controller.openFreightDetails)
+                            ontap: () {
+                              controller.onServiceContainerTap(
+                                  ServiceType.TankerHaulage);
+                            })
                       ],
                     ),
                   ),
