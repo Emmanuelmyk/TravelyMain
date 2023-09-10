@@ -13,8 +13,16 @@ class UserSigninController extends BaseController {
   var _verificationId = ''.obs;
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref().child('user');
   final Rx<User?> user = Rx<User?>(null);
-
+  var isLoading = false.obs;
   VoidCallback? onSignOut;
+
+  @override
+  void onInit() {
+    isLoading.value = false;
+    // TODO: implement onInit
+    super.onInit();
+  }
+
   // var uid = ''.obs;
   final phoneNoController = TextEditingController(
     text: kDebugMode ? '' : null,
@@ -43,12 +51,20 @@ class UserSigninController extends BaseController {
 //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
   Future<void> signInwithPhoneNumber(String phoneNo) async {
-    await _auth.verifyPhoneNumber(
+    print('running');
+    isLoading.value =
+        true; // Set isLoading to true when the verification process starts
+    try {
+      await _auth.verifyPhoneNumber(
         verificationCompleted: (credentials) async {
           await _auth.signInWithCredential(credentials);
+          isLoading.value =
+              false; // Set isLoading to false when verification is completed
         },
         timeout: Duration(milliseconds: 1),
         verificationFailed: (e) {
+          isLoading.value =
+              false; // Set isLoading to false when verification fails
           if (e.code == 'invalid-phone-number') {
             Get.snackbar('Error', 'The provided phone number is invalid');
           } else if (e.code == '17020 null') {
@@ -62,16 +78,25 @@ class UserSigninController extends BaseController {
           Get.offAndToNamed<void>(
             Routes.verifyScreen,
           );
+          isLoading.value = false;
         },
         codeAutoRetrievalTimeout: (verificationId) {
           _verificationId.value = verificationId;
         },
-        phoneNumber: "+234$phoneNo");
+        phoneNumber: "+234$phoneNo",
+      );
+    } catch (e) {
+      isLoading.value =
+          false; // Set isLoading to false in case of any exceptions
+      print('Error during phone verification: $e');
+    }
   }
 
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
   Future<void> signInWithOTP(String otp) async {
+    print('working');
+    isLoading.value = true;
     try {
       AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId.value,
@@ -88,11 +113,13 @@ class UserSigninController extends BaseController {
 
         // User is signed in, you can navigate to the next screen or perform other actions.
         Get.offAndToNamed<void>(Routes.verifiedScreen);
+        isLoading.value = false;
         var uid = signedInUser.uid;
         print('User UID: $uid');
       } else {
         // Handle the case where user is null (sign-in failed)
         Get.snackbar('', 'Something happened');
+        isLoading.value = false;
       }
     } catch (e) {
       // Handle any sign-in errors here
@@ -111,6 +138,7 @@ class UserSigninController extends BaseController {
         print(e);
       }
     }
+    isLoading.value = false;
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,6 +146,7 @@ class UserSigninController extends BaseController {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
   void CreateUserInRealtimeDatabase(
       String email, String firstname, String lastname) async {
+    isLoading.value = true;
     var phonenoReceiver = phoneNoController.text;
 
     await databaseRef.child(user.value!.uid).set({
@@ -130,6 +159,7 @@ class UserSigninController extends BaseController {
     Get.offAndToNamed<void>(
       Routes.dashLayout,
     );
+    isLoading.value = false;
   }
 
   void navigateToRegisterPage() {
@@ -142,6 +172,7 @@ class UserSigninController extends BaseController {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 
   Future<bool> checkUserProfileExists() async {
+    isLoading.value = true;
     try {
       // Get the user from the Rx observable
       User? currentUser = user.value;
@@ -161,8 +192,9 @@ class UserSigninController extends BaseController {
         if (snapshot.value != null) {
           return true;
         }
+        isLoading.value = false;
       }
-
+      isLoading.value = false;
       // User profile doesn't exist
       return false;
     } catch (e) {
